@@ -119,6 +119,8 @@ void najlepszy_przedmiot(student dane[100],int ile_rekordow)
     printf("Najgorsza średnia: %s - %s: %f\n",nazwa_przedmiotu[najgorsza_pozycja],kod_przedmiotu[najgorsza_pozycja],suma_ocen[najgorsza_pozycja]/licznik[najgorsza_pozycja]);
 }
 
+
+
 int main(int argc, char *argv[])
 {
     student dane[100];
