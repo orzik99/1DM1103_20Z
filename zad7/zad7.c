@@ -31,7 +31,12 @@ int main(int argc, char ** argv)
     }
    
 
-    listuj_studentow(sbaza);
+    listuj_przedmioty(pbaza);    
     zapisz_baze(argv[1], sbaza, pbaza, obaza);
+    
+
+    //zwolnij_s(sbaza);    
+   // zwolnij_p(pbaza);
+    //zwolnij_o(obaza);
     return 0;
 }

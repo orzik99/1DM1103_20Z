@@ -55,7 +55,6 @@ OBaza * wczytaj_Obaze(char *nazwa_pliku);
 
 
 void listuj_studentow(SBaza *baza);
-void zwolnij(SBaza *baza);
 void listuj_przedmioty(PBaza *baza);
 void listuj_oceny(OBaza *baza);
 
@@ -70,5 +69,9 @@ Przedmiot * dodaj_przedmiot(PBaza *head, char  *nazwa, char  *numer, char *semes
 Ocena * dodaj_ocene(OBaza *head, char  *numer, char  *kod, char *ocena, char  *komentarz);
 
 void zapisz_baze(char *nazwa_pliku,SBaza *sbaza,PBaza *pbaza, OBaza *obaza);
+
+void zwolnij_s(SBaza *baza);
+void zwolnij_p(PBaza *baza);
+void zwolnij_o(OBaza *baza);
 
 #endif

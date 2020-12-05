@@ -219,9 +219,13 @@ Student * dodaj_studenta(SBaza *head, char  *imie, char  *nazwisko, char *numer,
     
     Student *glowa = NULL;
     Student *nowy = (Student*) malloc(sizeof(Student));    
-    nowy->imie = imie;
+    nowy->imie = (char*) malloc( sizeof(char) * (strlen(imie) + 1));
+    nowy->imie = imie;  
+    nowy->nazwisko = (char*) malloc( sizeof(char) * (strlen(nazwisko) + 1));
     nowy->nazwisko = nazwisko;
+    nowy->nr_albumu = (char*) malloc( sizeof(char) * (strlen(numer) + 1));
     nowy->nr_albumu = numer;
+    nowy->email = (char*) malloc( sizeof(char) * (strlen(email) + 1));
     nowy->email = email;    
     nowy->nast = head->lista_studentow;
     glowa = nowy;
@@ -231,9 +235,12 @@ Student * dodaj_studenta(SBaza *head, char  *imie, char  *nazwisko, char *numer,
 Przedmiot * dodaj_przedmiot(PBaza *head, char  *nazwa, char  *numer, char *semestr)
 {
     Przedmiot *glowa = NULL;
-    Przedmiot *nowy = (Przedmiot*) malloc(sizeof(Przedmiot));    
+    Przedmiot *nowy = (Przedmiot*) malloc(sizeof(Przedmiot));
+    nowy->nazwa = (char*) malloc( sizeof(char) * (strlen(nazwa) + 1));    
     nowy->nazwa = nazwa;
+    nowy->semestr = (char*) malloc( sizeof(char) * (strlen(semestr) + 1)); 
     nowy->semestr = semestr;
+    nowy->nr_przedmiotu = (char*) malloc( sizeof(char) * (strlen(numer) + 1)); 
     nowy->nr_przedmiotu = numer;       
     nowy->nast = head->lista_przedmiotow;
     glowa = nowy;
@@ -243,10 +250,13 @@ Przedmiot * dodaj_przedmiot(PBaza *head, char  *nazwa, char  *numer, char *semes
 Ocena * dodaj_ocene(OBaza *head, char  *numer, char  *kod, char *ocena, char  *komentarz)
 {
     Ocena *glowa = NULL;
-    Ocena *nowy = (Ocena*) malloc(sizeof(Ocena));    
+    Ocena *nowy = (Ocena*) malloc(sizeof(Ocena));  
+    nowy->nr_albumu = (char*) malloc( sizeof(char) * (strlen(numer) + 1));   
     nowy->nr_albumu = numer;
+    nowy->kod_przedmiotu = (char*) malloc( sizeof(char) * (strlen(kod) + 1));     
     nowy->kod_przedmiotu = kod;
-    nowy->komentarz = komentarz;
+    nowy->komentarz = (char*) malloc( sizeof(char) * (strlen(komentarz) + 1)); 
+    nowy->komentarz = komentarz;    
     nowy->ocena = atof(ocena);      
     nowy->nast = head->lista_ocen;
     glowa = nowy;
@@ -305,16 +315,94 @@ void zapisz_baze(char *nazwa_pliku,SBaza *sbaza,PBaza *pbaza, OBaza *obaza)
     fprintf(fin, "%d\n",p);
     while (przed != NULL)
     {
-        fprintf(fin,"%s;%s;%s\n",przed->nazwa, przed->nr_przedmiotu, przed->semestr);
+        fprintf(fin,"%s;%s;%s\n",przed->nr_przedmiotu,przed->nazwa, przed->semestr);
         przed = przed->nast;
     }
     fprintf(fin, "%d\n",o);
     while (ocena != NULL)
     {
-        fprintf(fin,"%s;%s;%f:%s\n",ocena->nr_albumu,ocena->kod_przedmiotu,ocena->ocena,ocena->komentarz);
+        fprintf(fin,"%s;%s;%f;%s\n",ocena->nr_albumu,ocena->kod_przedmiotu,ocena->ocena,ocena->komentarz);
         ocena = ocena->nast;
     }
 
     fclose(fin);
+
+}
+
+void zwolnij_student(Student *s) 
+{
+    free(s->imie);
+    free(s->nazwisko);
+    free(s->nr_albumu);
+    free(s->email);
+    free(s);
+}
+
+void zwolnij_przedmiot(Przedmiot *s)
+ {
+    free(s->nazwa);
+    free(s->nr_przedmiotu);
+    free(s->semestr);    
+    free(s);
+}
+void zwolnij_ocene(Ocena *s) 
+{
+    free(s->nr_albumu);
+    free(s->kod_przedmiotu);
+    free(s->komentarz);     
+    free(s);
+}
+
+void zwolnij_liste_studentow(Student *s) 
+{
+    Student *n;
+    while (s != NULL) 
+    {
+        n = s->nast;
+        zwolnij_student(s);
+        s = n;
+    }
+}
+void zwolnij_liste_przedmiotow(Przedmiot *s) 
+{
+    Przedmiot *n;
+    while (s != NULL)
+     {
+        n = s->nast;
+        zwolnij_przedmiot(s);
+        s = n;
+    }
+}
+
+void zwolnij_liste_ocen(Ocena *s) 
+{
+    Ocena *n;
+    while (s != NULL) 
+    {
+        n = s->nast;
+        zwolnij_ocene(s);
+        s = n;
+    }
+}
+
+void zwolnij_s (SBaza *baza) 
+{
+    zwolnij_liste_studentow(baza->lista_studentow);
+    free(baza);
+}
+
+
+
+void zwolnij_p (PBaza *baza)
+{
+    zwolnij_liste_przedmiotow(baza->lista_przedmiotow);
+    free(baza);
+}
+
+
+void zwolnij_o (OBaza *baza)
+{
+    zwolnij_liste_ocen(baza->lista_ocen);
+    free(baza);
 
 }

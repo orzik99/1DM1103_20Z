@@ -1,13 +1,15 @@
-4
+5
+ala;kowalska;2132;ll@ll
 janko;muzykant;123213;lelelele@lele
 Robert;Kowalski;123456;ala@ala.pl
 Jan;Nowak;000007;brak@brak.pl
 Grzegorz;Schetyński;00000001;nie@nie.pl
-2
-Numerical methods;1DE2103;2020Z
-Algorithms and python;1DA1245;2020Z
+3
+21312TEST;przed_testowy;2020Z
+1DE2103;Numerical methods;2020Z
+1DA1245;Algorithms and python;2020Z
 4
-000007;1DE2103;3.500000: 
-000007;1DA1245;2.000000:Beznadziejny projekt!
-123456;1DE2103;4.200000: 
-00000001;1DA1245;3.000000:Super!
+000007;1DE2103;3.500000;  
+000007;1DA1245;2.000000;Beznadziejny projekt!
+123456;1DE2103;4.200000; 
+00000001;1DA1245;3.000000;Super!
