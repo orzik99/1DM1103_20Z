@@ -216,18 +216,44 @@ int ile_ocen(OBaza *baza) {
 
 Student * dodaj_studenta(SBaza *head, char  *imie, char  *nazwisko, char *numer, char  *email)
 {
-    printf("TEST 1 %s",imie);  
+    
     Student *glowa = NULL;
     Student *nowy = (Student*) malloc(sizeof(Student));    
-    strcpy(nowy->imie, imie);
-    strcpy(nowy->nazwisko, nazwisko);
-    strcpy(nowy->nr_albumu, numer);
-    strcpy(nowy->email, email);   
+    nowy->imie = imie;
+    nowy->nazwisko = nazwisko;
+    nowy->nr_albumu = numer;
+    nowy->email = email;    
     nowy->nast = head->lista_studentow;
     glowa = nowy;
     return glowa;
     
 }
+Przedmiot * dodaj_przedmiot(PBaza *head, char  *nazwa, char  *numer, char *semestr)
+{
+    Przedmiot *glowa = NULL;
+    Przedmiot *nowy = (Przedmiot*) malloc(sizeof(Przedmiot));    
+    nowy->nazwa = nazwa;
+    nowy->semestr = semestr;
+    nowy->nr_przedmiotu = numer;       
+    nowy->nast = head->lista_przedmiotow;
+    glowa = nowy;
+    return glowa;
+}
+
+Ocena * dodaj_ocene(OBaza *head, char  *numer, char  *kod, char *ocena, char  *komentarz)
+{
+    Ocena *glowa = NULL;
+    Ocena *nowy = (Ocena*) malloc(sizeof(Ocena));    
+    nowy->nr_albumu = numer;
+    nowy->kod_przedmiotu = kod;
+    nowy->komentarz = komentarz;
+    nowy->ocena = atof(ocena);      
+    nowy->nast = head->lista_ocen;
+    glowa = nowy;
+    return glowa;
+
+}
+
 
 void listuj_studentow(SBaza *baza) {
     Student * stud = baza->lista_studentow;
@@ -252,4 +278,43 @@ void listuj_oceny(OBaza *baza) {
         printf("%s %s %f %s\n", stud->kod_przedmiotu, stud->nr_albumu, stud->ocena, stud->komentarz);
         stud = stud->nast;
     }
+}
+
+
+void zapisz_baze(char *nazwa_pliku,SBaza *sbaza,PBaza *pbaza, OBaza *obaza)
+{
+    int s,p,o;
+    FILE *fin = fopen(nazwa_pliku, "w");
+    if (fin == NULL)
+    {
+        printf("Błąd! Nie da sie wczytac pliku: %s",nazwa_pliku);
+    }
+    Student *stud = sbaza->lista_studentow;
+    Przedmiot *przed = pbaza->lista_przedmiotow;
+    Ocena *ocena = obaza->lista_ocen;
+    s= ile_studentow(sbaza);
+    p = ile_przedmiotow(pbaza);
+    o = ile_ocen(obaza);
+    
+    fprintf(fin, "%d\n",s);
+    while (stud != NULL)
+    {
+        fprintf(fin,"%s;%s;%s;%s\n",stud->imie, stud->nazwisko, stud->nr_albumu, stud->email);
+        stud = stud->nast;
+    }
+    fprintf(fin, "%d\n",p);
+    while (przed != NULL)
+    {
+        fprintf(fin,"%s;%s;%s\n",przed->nazwa, przed->nr_przedmiotu, przed->semestr);
+        przed = przed->nast;
+    }
+    fprintf(fin, "%d\n",o);
+    while (ocena != NULL)
+    {
+        fprintf(fin,"%s;%s;%f:%s\n",ocena->nr_albumu,ocena->kod_przedmiotu,ocena->ocena,ocena->komentarz);
+        ocena = ocena->nast;
+    }
+
+    fclose(fin);
+
 }

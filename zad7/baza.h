@@ -46,13 +46,13 @@ typedef struct _OBaza {
 
 
 SBaza * wczytaj_Sbaze(char *nazwa_pliku);
-SBaza * zapisz_Sbaze(char *nazwa_pliku, SBaza * baza);
+
 
 PBaza * wczytaj_Pbaze(char *nazwa_pliku);
-PBaza * zapisz_Pbaze(char *nazwa_pliku, PBaza * baza);
+
 
 OBaza * wczytaj_Obaze(char *nazwa_pliku);
-OBaza * zapisz_Obaze(char *nazwa_pliku, OBaza * baza);
+
 
 void listuj_studentow(SBaza *baza);
 void zwolnij(SBaza *baza);
@@ -65,6 +65,10 @@ int ile_studentow(SBaza *baza);
 
 Student * dodaj_studenta(SBaza *head, char  *imie, char  *nazwisko, char *numer, char  *email);
 
+Przedmiot * dodaj_przedmiot(PBaza *head, char  *nazwa, char  *numer, char *semestr);
 
+Ocena * dodaj_ocene(OBaza *head, char  *numer, char  *kod, char *ocena, char  *komentarz);
+
+void zapisz_baze(char *nazwa_pliku,SBaza *sbaza,PBaza *pbaza, OBaza *obaza);
 
 #endif
